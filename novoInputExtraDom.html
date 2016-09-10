@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  Author: Marcelo Queiroz de Santana
+  Description : Adicionando Novo Input no Formúlario, utilizando a DOMCore Javascript
+  Cria um campo input, alterando seus seus atribudos, id, name,type.
+  Cria um campo label, alterando seu atribudo for = para o id do Inputseus atribudos, id, name,type.
+  
+   
+ -->
+<html lang="ptbr">
+	<head>
+		<title>Adicionando Novo Input no Formulário</title>
+		<meta charset='utf8'/>
+	</head>
+	<body>
+		<h3> Adicionando Novo Input no Formulário</h3>
+		<form action="#" method="get" id="formCampoExtra">
+			<div id="divTel">
+				<label for="txtTelefone1"> Telefone 1:
+					<input type="tel" id="txtTelefone1" name="txtTelefone1"/>
+				</label>
+			</div>
+				
+			<p>
+				<input type="button" id="btNovoTelefone" name="btNovoTelefone" value="Novo Input" onclick="criarInput();"/>
+			</p>
+				
+			<br />
+			<p>
+				<input type="submit" id="btSubmit" name="btSubmit" value="Enviar"/>
+			</p>
+		</form>
+		
+		<script type="text/javascript">
+			
+			function criarInput() {
+				div = document.getElementById("divTel");
+				ultimo = div.childNodes.length ;
+												
+				var label = document.createElement('label');
+				var id = "";
+								
+				for (var j = ultimo -1; j>=0; j--) {					
+					if (div.childNodes[j].nodeType == 1 && div.childNodes[j].nodeName == 'LABEL') {
+						inputTel = div.childNodes[j].childNodes[1];
+						idTelefone = inputTel.id;
+												
+						var inicioTamanho = idTelefone.length -1;
+						for (var k=0; k<idTelefone.length -1; k++) {
+							if (!isNaN(idTelefone[k])) {
+								inicioTamanho = k;
+								break;
+							}														
+						}
+						id = (Number(idTelefone.substr(inicioTamanho , idTelefone.length -1)))+1;
+						break;	
+					}
+				}
+								
+				/** 
+					Limitador de quantidade de inputs acrescentados.
+					Se houver o interesse que seja mais ou menos,
+					altere o valor no if logo abaixo de 5 para a
+					quantidade que deseja permitir.
+				**/
+							
+				if(id-1 < 5){
+					label.setAttribute('for','telefone'+id);
+					label.appendChild(document.createTextNode("Telefone "+id+": "));
+				
+					input = document.createElement('input');
+					input.id = 'telefone'+id;
+					input.name = 'telefone'+id;
+					input.type = 'tel';				
+				
+					label.appendChild(input);
+					br = document.createElement('br');
+								
+					div.appendChild(br);
+					div.appendChild(label);
+				
+					return false;
+				}
+			}
+			
+		</script>
+	</body>
+	
+</html>
